@@ -37,8 +37,8 @@
     </changeSet>
     <changeSet id="4" author="Dennis">
         <createTable tableName="AppUser">
-            <column name="id" type="uuid">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="id" type="uuid" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="firstname" type="varchar" />
             <column name="lastname" type="varchar" />
@@ -46,7 +46,16 @@
             <column name="password" type="varchar" />
             <column name="roles" type="varchar" />
         </createTable>
+    </changeSet>
 
+    <changeSet id="5" author="Douglas">
+        <insert catalogName="matadoren" dbms="postgresql" tableName="AppUser" schemaName="public">
+            <column name="id" value="8d1208fc-f401-496c-9cb8-483fef121234" />
+            <column name="firstname" value="admin"/>
+            <column name="lastname" value=""/>
+            <column name="username" value="admin"/>
+            <column name="password" value="password"/>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>
