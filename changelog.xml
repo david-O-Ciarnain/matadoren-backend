@@ -35,5 +35,18 @@
                 existingTableName="person"  existingColumnName="state"
                 newTableName="state"  newColumnName="id"  newColumnDataType="char(2)"/>
     </changeSet>
+    <changeSet id="4" author="Dennis">
+        <createTable tableName="AppUser">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="firstname" type="varchar" />
+            <column name="lastname" type="varchar" />
+            <column name="username" type="varchar" />
+            <column name="password" type="varchar" />
+            <column name="roles" type="varchar" />
+        </createTable>
+
+    </changeSet>
 
 </databaseChangeLog>
