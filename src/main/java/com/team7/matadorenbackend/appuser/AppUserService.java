@@ -1,11 +1,18 @@
 package com.team7.matadorenbackend.appuser;
 
+import com.team7.matadorenbackend.appuser.roles.Roles;
+import com.team7.matadorenbackend.appuser.roles.RolesRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @AllArgsConstructor
 @Service
@@ -13,6 +20,7 @@ public class AppUserService implements UserDetailsService {
 
     private final AppUserRepo appUserRepo;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final RolesRepo rolesRepo;
 
 
     public AppUser getAppUser(String name) {
@@ -26,14 +34,29 @@ public class AppUserService implements UserDetailsService {
         if (userExists) {
             throw new IllegalStateException("User do not exists");
         }
+
         String encode = bCryptPasswordEncoder.encode(appUser.getPassword());
+
         appUser.setPassword(encode);
-        return appUserRepo.save(appUser);
+       return  appUserRepo.save(appUser);
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        AppUser appUser = appUserRepo.findByUsername(username);
+
+        if(appUser == null){
+            throw  new UsernameNotFoundException("user not found");
+        }
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        appUser.getRoles().forEach(roles -> authorities.add(new SimpleGrantedAuthority(roles.getRoleName())));
+        return new User(appUser.getUsername(),appUser.getPassword(),authorities);
+    }
+
+    public void addRoleToAppUSer(String username,String roleName){
+        AppUser appUser = appUserRepo.findByUsername(username);
+        Roles roles = rolesRepo.findByName(roleName);
+        appUser.getRoles().add(roles);
     }
 }
