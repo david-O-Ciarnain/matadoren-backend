@@ -20,9 +20,9 @@ public class Roles {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    private String roleName;
+    private String name;
 
     public Roles(String name) {
-        this.roleName = name;
+        this.name = name;
     }
 }

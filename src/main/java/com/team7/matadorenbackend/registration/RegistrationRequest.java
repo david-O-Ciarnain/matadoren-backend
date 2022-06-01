@@ -1,4 +1,4 @@
-package com.team7.matadorenbackend.appuser.dto;
+package com.team7.matadorenbackend.registration;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

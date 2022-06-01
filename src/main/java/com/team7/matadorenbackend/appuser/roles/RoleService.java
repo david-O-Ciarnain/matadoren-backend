@@ -15,7 +15,7 @@ public class RoleService {
     public List<Roles> getAllRolls() {
         List<Roles> preSetRoles = new ArrayList<>();
 
-        if (preSetRoles.isEmpty()) {
+        if (preSetRoles == null) {
             preSetRoles = List.of(
                     new Roles("USER"),
                     new Roles("ADMIN")
