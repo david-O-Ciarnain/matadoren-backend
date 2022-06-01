@@ -25,10 +25,11 @@ public class AppUser {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    private String username;
     private String firstName;
 
     private String lastName;
+
+    private String username;
 
     private String password;
 
@@ -36,10 +37,12 @@ public class AppUser {
     private Collection<Roles>roles = new ArrayList<>();
 
 
-    public AppUser(String username, String firstName, String lastName, String password, Collection<Roles> roles) {
-        this.username = username;
+
+
+    public AppUser(String firstName, String lastName, String username, String password, Collection<Roles> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
         this.password = password;
         this.roles = roles;
     }
