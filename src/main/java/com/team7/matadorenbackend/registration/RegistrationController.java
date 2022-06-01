@@ -29,10 +29,10 @@ public class RegistrationController {
     }
 
     @DeleteMapping(path = "delete/{username}")
-    public void deleteAppUser(@PathVariable("username") String username) {
+    public void deleteAppUser(@PathVariable  String username) {
         appUserService.deleteAppUserByUserName(username);
     }
-    @PutMapping(path = "update{username}")
+    @PutMapping(path = "update/{username}")
     public AppUser updateAppUser(@RequestBody AppUser appUser,@PathVariable String username){
         return appUserService.updateAppUser(appUser,username);
     }
