@@ -32,8 +32,9 @@ public class AppUserService implements UserDetailsService {
             return appUserRepo.findAll();
         }
         return appUserRepo.search(name);
-
-
+    }
+    public AppUser getUser(String username){
+        return appUserRepo.findByUsername(username).orElseThrow(() -> new IllegalStateException());
     }
 
     public AppUser signUpAppUser(AppUser appUser) {
