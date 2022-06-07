@@ -12,18 +12,22 @@ public class RoleService {
 
     private final RolesRepo rolesRepo;
 
+
+        public List<Roles> saveRoles(){
+            List<Roles> preSetRoles;
+
+
+                preSetRoles = List.of(
+                        new Roles("USER"),
+                        new Roles("ADMIN")
+                );
+
+                List<Roles> rolesList = new ArrayList<>(preSetRoles);
+                return rolesRepo.saveAll(rolesList);
+
+    }
+
     public List<Roles> getAllRolls() {
-        List<Roles> preSetRoles = new ArrayList<>();
-
-        if (preSetRoles.isEmpty()) {
-            preSetRoles = List.of(
-                    new Roles("USER"),
-                    new Roles("ADMIN")
-
-            );
-            List<Roles> rolesList = new ArrayList<>(preSetRoles);
-            rolesRepo.saveAll(rolesList);
-        }
         return rolesRepo.findAll();
     }
 }
