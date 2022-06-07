@@ -1,6 +1,6 @@
-package com.team7.matadorenbackend.controller;
+package com.team7.matadorenbackend.websockets.controller;
 
-import com.team7.matadorenbackend.model.ChatMessage;
+import com.team7.matadorenbackend.websockets.model.ChatMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;

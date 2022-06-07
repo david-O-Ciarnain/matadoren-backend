@@ -1,4 +1,4 @@
-package com.team7.matadorenbackend.web;
+package com.team7.matadorenbackend.websockets.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
