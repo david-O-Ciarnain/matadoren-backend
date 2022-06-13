@@ -34,28 +34,28 @@ public class RegistrationController {
     }
 
     @DeleteMapping(path = "delete/{username}")
-    public void deleteAppUser(@PathVariable  String username)
-    {
+    public void deleteAppUser(@PathVariable String username) {
         appUserService.deleteAppUserByUserName(username);
     }
 
     @PutMapping(path = "update/{username}")
-    public AppUser updateAppUser(@RequestBody AppUser appUser,@PathVariable String username){
-        return appUserService.updateAppUser(appUser,username);
+    public AppUser updateAppUser(@RequestBody AppUser appUser, @PathVariable String username) {
+        return appUserService.updateAppUser(appUser, username);
     }
 
     @GetMapping(path = "roles/get")
     public List<Roles> getAllRoles() {
         return registrationService.getRoles();
     }
+
     @PostMapping(path = "roles/save")
-    public List<Roles>saveRoles(){
+    public List<Roles> saveRoles() {
         return roleService.saveRoles();
     }
 
     @PostMapping(path = "roles/addroletouser")
-    public ResponseEntity<?> roleToAppUser(@RequestBody RoleRequest request){
-        appUserService.addRoleToAppUSer(request.getUsername(),request.getRoleName());
+    public ResponseEntity<?> roleToAppUser(@RequestBody RoleRequest request) {
+        appUserService.addRoleToAppUSer(request.getUsername(), request.getRoleName());
         return ResponseEntity.ok().build();
     }
 }
