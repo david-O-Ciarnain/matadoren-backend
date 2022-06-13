@@ -24,12 +24,15 @@ public class MatadorenBackendApplication {
     }
 
     @Bean
-    CommandLineRunner run(AppUserService appUserService, RegistrationService registrationService, RoleService roleService){
+    CommandLineRunner run(AppUserService appUserService, RoleService roleService){
 
         return args -> {
-            appUserService.signUpAppUser(new AppUser("demo","demo","123","123",new ArrayList<>()));
             roleService.saveRoles();
-            appUserService.addRoleToAppUSer("123","ADMIN");
+            appUserService.signUpAppUser(new AppUser("demo","demo","admin","123",new ArrayList<>()));
+            appUserService.signUpAppUser(new AppUser("user","user","user","321",new ArrayList<>()));
+
+            appUserService.addRoleToAppUSer("user","USER");
+            appUserService.addRoleToAppUSer("admin","ADMIN");
         };
     }
 }
