@@ -34,7 +34,7 @@ public class AppUserService implements UserDetailsService {
         return appUserRepo.search(name);
     }
     public AppUser getUser(String username){
-        return appUserRepo.findByUsername(username).orElseThrow(() -> new IllegalStateException());
+        return appUserRepo.findByUsername(username).orElseThrow(IllegalStateException::new);
     }
 
     public AppUser signUpAppUser(AppUser appUser) {
@@ -93,7 +93,7 @@ public class AppUserService implements UserDetailsService {
 
     public void addRoleToAppUSer(String username, String roleName) {
         AppUser appUser = appUserRepo.findByUsername(username)
-                .orElseThrow(() -> new IllegalStateException("user with username " + username));
+                .orElseThrow(() -> new IllegalStateException("user with username " + username + "not exists"));
 
         Roles roles = rolesRepo.findByName(roleName);
         appUser.getRoles().add(roles);
