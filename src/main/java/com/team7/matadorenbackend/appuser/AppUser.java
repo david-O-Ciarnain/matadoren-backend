@@ -30,6 +30,8 @@ public class AppUser {
 
     private String username;
 
+    private String email;
+
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -38,10 +40,11 @@ public class AppUser {
 
 
 
-    public AppUser(String firstName, String lastName, String username, String password, Collection<Roles> roles) {
+    public AppUser(String firstName, String lastName, String username,String email, String password, Collection<Roles> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+        this.email = email;
         this.password = password;
         this.roles = roles;
     }

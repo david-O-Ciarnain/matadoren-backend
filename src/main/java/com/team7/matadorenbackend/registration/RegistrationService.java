@@ -24,6 +24,7 @@ public class RegistrationService {
                 request.getLastName(),
                 request.getUsername(),
                 request.getPassword(),
+                request.getEmail(),
                 new ArrayList<>()
         ));
 
