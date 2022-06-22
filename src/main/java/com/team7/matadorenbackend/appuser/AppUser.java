@@ -28,16 +28,15 @@ public class AppUser {
 
     private String lastName;
 
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String email;
 
-
+    @Column(nullable = false)
     private String password;
 
-    public String getPassword() {
-        return password;
-    }
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Roles>roles = new ArrayList<>();
