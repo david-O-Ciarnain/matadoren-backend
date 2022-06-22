@@ -26,7 +26,7 @@ public class AppUserService implements UserDetailsService {
     private final RolesRepo rolesRepo;
 
 
-    public List<AppUser> getAppUser(String name) {
+   public List<AppUser> getAppUser(String name) {
 
         if (name == null || name.isEmpty()) {
             return appUserRepo.findAll();
@@ -51,6 +51,7 @@ public class AppUserService implements UserDetailsService {
         return appUserRepo.save(appUser);
     }
 
+
     public void deleteAppUserByUserName(String username) {
 
         appUserRepo
@@ -68,6 +69,7 @@ public class AppUserService implements UserDetailsService {
                     user.setFirstName(appUser.getFirstName());
                     user.setLastName(appUser.getLastName());
                     user.setPassword(appUser.getPassword());
+                    user.setEmail(appUser.getEmail());
 
                     return appUserRepo.save(user);
                 })

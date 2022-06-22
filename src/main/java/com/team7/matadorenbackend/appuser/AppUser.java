@@ -32,11 +32,15 @@ public class AppUser {
 
     private String email;
 
+
     private String password;
+
+    public String getPassword() {
+        return password;
+    }
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Roles>roles = new ArrayList<>();
-
 
 
 

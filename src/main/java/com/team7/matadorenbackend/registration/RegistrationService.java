@@ -23,8 +23,8 @@ public class RegistrationService {
                 request.getFirstName(),
                 request.getLastName(),
                 request.getUsername(),
-                request.getPassword(),
                 request.getEmail(),
+                request.getPassword(),
                 new ArrayList<>()
         ));
 
