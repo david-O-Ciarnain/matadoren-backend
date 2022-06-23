@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team7.matadorenbackend.appuser.AppUser;
 import com.team7.matadorenbackend.appuser.AppUserService;
 import com.team7.matadorenbackend.appuser.roles.RoleService;
+import com.team7.matadorenbackend.websockets.web.WebSocketMethods;
 import com.team7.matadorenbackend.websockets.model.ChatMessage;
 import com.team7.matadorenbackend.websockets.model.MessageType;
+import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.java_websocket.WebSocket;
@@ -19,6 +21,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,19 +33,10 @@ public class MatadorenBackendApplication extends WebSocketServer {
 
     private final static Logger logger = LogManager.getLogger(MatadorenBackendApplication.class);
 
-    private HashMap<WebSocket, AppUser> users;
+    private final Set<WebSocket> connections;
 
-    private Set<WebSocket> connections;
+    public MatadorenBackendApplication() throws UnknownHostException {
 
-    private MatadorenBackendApplication(int port) {
-        super(new InetSocketAddress(port));
-        connections = new HashSet<>();
-        users = new HashMap<>();
-    }
-
-
-    public MatadorenBackendApplication(InetSocketAddress address) {
-        super(address);
     }
 
     public static void main(String[] args) {
@@ -83,7 +77,7 @@ public class MatadorenBackendApplication extends WebSocketServer {
     connections.remove(connection);
     //When connection is closed, remove the user.
         try {
-            removeUser(connection);
+            WebSocketMethods.removeUser(connection);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -100,13 +94,13 @@ public class MatadorenBackendApplication extends WebSocketServer {
 
             switch (msg.getType()) {
                 case CONNECT:
-                    addUser(new AppUser("", "", msg.getSender(), "", "",  ), connection);
+                    WebSocketMethods.addUser(new AppUser(msg.getSender()), connection);
                     break;
                 case DISCONNECT:
-                    removeUser(connection);
+                    WebSocketMethods.removeUser(connection);
                     break;
                 case CHAT:
-                    broadcastMessage(msg);
+                    WebSocketMethods.broadcastMessage(msg);
             }
 
             System.out.println("Message from user: " + msg.getSender() + ", text: " + msg.getContent() + ", type:" + msg.getType());
@@ -125,46 +119,5 @@ public class MatadorenBackendApplication extends WebSocketServer {
         }
         assert connection != null;
         System.out.println("ERROR from " + connection.getRemoteSocketAddress().getAddress().getHostAddress());
-    }
-
-    private void broadcastMessage(ChatMessage msg) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String messageJson = mapper.writeValueAsString(msg);
-            for (WebSocket sock : connections) {
-                sock.send(messageJson);
-            }
-        } catch (JsonProcessingException e) {
-            logger.error("Cannot convert message to json.");
-        }
-    }
-
-    private void addUser(AppUser user, WebSocket conn) throws JsonProcessingException {
-        users.put(conn, user);
-        acknowledgeUserJoined(user, conn);
-        broadcastUserActivityMessage(MessageType.CONNECT);
-    }
-
-    private void removeUser(WebSocket conn) throws JsonProcessingException {
-        users.remove(conn);
-        broadcastUserActivityMessage(MessageType.DISCONNECT);
-    }
-
-    private void acknowledgeUserJoined(AppUser user, WebSocket conn) throws JsonProcessingException {
-        ChatMessage message = new ChatMessage();
-        message.setType(MessageType.CONNECT_ACK);
-        message.setSender(user.getUsername());
-        conn.send(new ObjectMapper().writeValueAsString(message));
-    }
-
-    private void broadcastUserActivityMessage(MessageType messageType) throws JsonProcessingException {
-
-        ChatMessage newMessage = new ChatMessage();
-
-        ObjectMapper mapper = new ObjectMapper();
-        String data = mapper.writeValueAsString(users.values());
-        newMessage.setContent(data);
-        newMessage.setType(messageType);
-        broadcastMessage(newMessage);
     }
 }

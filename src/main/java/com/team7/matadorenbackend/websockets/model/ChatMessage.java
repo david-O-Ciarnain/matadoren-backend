@@ -13,16 +13,28 @@ public class ChatMessage implements Serializable {
 
     @Getter
     @Setter
-    private MessageType type;
+    public MessageType type;
 
     @Getter
     @Setter
-    private String content;
+    public String content;
 
     @Getter
     @Setter
-    private String sender;
+    public String sender;
 
     @Getter
-    private String time;
+    public String time;
+
+    public ChatMessage(MessageType type, String content, String sender, String time) {
+        this.type = type;
+        this.content = content;
+        this.sender = sender;
+        this.time = time;
+    }
+
+    public ChatMessage() {
+    }
 }
+
+

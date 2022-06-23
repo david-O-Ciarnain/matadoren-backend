@@ -51,4 +51,7 @@ public class AppUser {
         this.password = password;
         this.roles = roles;
     }
+
+    public AppUser(String sender) {
+    }
 }
