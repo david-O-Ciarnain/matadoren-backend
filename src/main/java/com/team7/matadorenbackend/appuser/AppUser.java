@@ -39,7 +39,7 @@ public class AppUser implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    private boolean enable;
+    private boolean enable = true;
 
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
