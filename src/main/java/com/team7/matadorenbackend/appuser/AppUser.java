@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-public class AppUser {
+public class AppUser implements UserDetails {
 
 
     @Id
@@ -37,8 +39,10 @@ public class AppUser {
     @Column(nullable = false)
     private String password;
 
+    private boolean enable;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Collection<Roles>roles = new ArrayList<>();
 
 
@@ -50,5 +54,30 @@ public class AppUser {
         this.email = email;
         this.password = password;
         this.roles = roles;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return enable;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return enable;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return enable;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enable;
     }
 }

@@ -7,7 +7,6 @@ import com.team7.matadorenbackend.appuser.roles.Roles;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,7 +20,7 @@ public class RegistrationService {
     public AppUser register(RegistrationRequest request){
 
         boolean isEmailValid = emailValidator.test(request.getEmail());
-
+        List<Roles> rolesList = List.of(new Roles("USER"));
         if(!isEmailValid){
             throw new IllegalStateException("email not valid");
         }
@@ -32,7 +31,7 @@ public class RegistrationService {
                 request.getUsername(),
                 request.getEmail(),
                 request.getPassword(),
-                new ArrayList<>()
+                rolesList
         ));
 
         return user;
