@@ -95,7 +95,7 @@ public class AppUserService implements UserDetailsService {
 
     public void addRoleToAppUSer(String username, String roleName) {
         AppUser appUser = appUserRepo.findByUsername(username)
-                .orElseThrow(() -> new IllegalStateException("user with username " + username + "not exists"));
+                .orElseThrow(() -> new IllegalStateException("user with username " + username + " not exists"));
 
         Roles roles = rolesRepo.findByName(roleName);
         appUser.getRoles().add(roles);

@@ -28,8 +28,12 @@ public class RegistrationController {
         return ResponseEntity.created(uri).body(registrationService.register(request));
     }
 
+    @GetMapping(path = "get/{name}")
+    public ResponseEntity<List<AppUser>> getAppUser(@PathVariable String name) {
+        return ResponseEntity.ok().body(appUserService.getAppUser(name));
+    }
     @GetMapping(path = "get")
-    public ResponseEntity<List<AppUser>> getAppUser(String name) {
+    public ResponseEntity<List<AppUser>> getAllAppUser(String name) {
         return ResponseEntity.ok().body(appUserService.getAppUser(name));
     }
 

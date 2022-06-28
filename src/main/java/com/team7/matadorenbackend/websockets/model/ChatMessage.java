@@ -1,20 +1,17 @@
 package com.team7.matadorenbackend.websockets.model;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
-@Builder
+@ToString
+@Getter
+@Setter
+@AllArgsConstructor
+
 public class ChatMessage {
 
-    @Getter
-    private MessageType type;
-
-    @Getter
-    private String content;
-
-    @Getter
-    private String sender;
-
-    @Getter
-    private String time;
+    private String senderName;
+    private String receiverName;
+    private String message;
+    private String date;
+    private Status status;
 }
