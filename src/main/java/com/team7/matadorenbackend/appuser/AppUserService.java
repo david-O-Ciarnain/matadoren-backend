@@ -61,14 +61,15 @@ public class AppUserService implements UserDetailsService {
 
 
     public AppUser updateAppUser(AppUser appUser, String username) {
-
+        String encode = bCryptPasswordEncoder.encode(appUser.getPassword());
         return appUserRepo
                 .findByUsername(username)
                 .map(user -> {
                     user.setUsername(appUser.getUsername());
                     user.setFirstName(appUser.getFirstName());
                     user.setLastName(appUser.getLastName());
-                    user.setPassword(appUser.getPassword());
+
+                    user.setPassword(encode);
                     user.setEmail(appUser.getEmail());
 
                     return appUserRepo.save(user);
