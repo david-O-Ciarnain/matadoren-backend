@@ -6,7 +6,7 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
-
+@NoArgsConstructor
 public class ChatMessage {
 
     private String senderName;
